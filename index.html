@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<!--This loads jQuery and an extension to jQuery to allow writing to JSON-->
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="http://www.theargentlark.com/dark-chess/jquery.json.js"></script>
+<script type="application/x-javascript" src="util.js"></script>
+<script type="application/x-javascript" src="misc.js"></script>
+
+<!--This is your javascript file-->
+<script type="application/x-javascript" src="code.js"></script>
+
+<!--Our initial code which calls our Javascript once everything is loaded,
+    we will call init_stats() when all is ready to go.-->
+<script type="text/javascript">
+	$(document).ready(function() {
+		init_game(); 
+	});
+</script>
+
+</head>
+<body>
+
+<canvas id="main_canvas" width="500" height="400">
+</canvas>
+
+</body>
+</html>
