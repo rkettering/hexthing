@@ -9,4 +9,9 @@ sign: function( val ){
 	return val > 0 ? 1 : val == 0 ? 0 : -1;
 },
 
+
+dice: function(diceNum){
+	return misc.truncate(Math.random() * diceNum) + 1;
+},
+
 };
