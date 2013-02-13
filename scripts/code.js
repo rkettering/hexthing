@@ -11,11 +11,7 @@ function init_game(){
 	
 function get_data(){
 	gamedata = new Object();
-	gamedata.tiles = [['teal.png','green.png','green.png','teal.png','green.png'],
-						['teal.png','teal.png','green.png','teal.png','green.png'],
-						['green.png','green.png','green.png','teal.png','green.png'],
-						['green.png','teal.png','teal.png','teal.png','green.png'],
-						['green.png','green.png','green.png','teal.png','green.png']];
+	gamedata.tiles = generate_tile_map_for_width_height(5,10);
 
 	return gamedata;
 }
