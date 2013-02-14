@@ -23,8 +23,9 @@ function on_ready_to_draw()
 }
 
 function init_display(){
-	util.require_image_before_next_draw('green.png');
-	util.require_image_before_next_draw('teal.png');
+	util.require_image_before_next_draw('images/green.png');
+	util.require_image_before_next_draw('images/teal.png');
+	util.require_image_before_next_draw('images/indigo.png');
 }
 
 
@@ -107,7 +108,7 @@ function display_game(data){
 		$.each(data.tiles, function(outerindex,outervalue) {
 		
 		
-			$.each(outervalue, function(index,value) { ctx.drawImage(util.images_cache[value],index*tileWidth +(tileWidth/2)*((outerindex)%2) ,outerindex* tileVertOffset); /*console.log(index);*/  });
+			$.each(outervalue, function(index,value) { ctx.drawImage(util.images_cache[('images/' + value)],index*tileWidth +(tileWidth/2)*((outerindex)%2) ,outerindex* tileVertOffset); /*console.log(index);*/  });
 			
 		 });
 	}
