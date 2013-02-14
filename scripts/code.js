@@ -1,8 +1,12 @@
 var ImageURL = './';
+var gamedata = null;
 
 function init_game(){
 	util.init();
 	init_display();
+
+	gamedata = new Object();
+	gamedata.tiles = generate_tile_map_for_width_height(5,10);
 	
 	if(util.ready_to_draw()){
 		display_game(get_data());
@@ -10,8 +14,6 @@ function init_game(){
 }
 	
 function get_data(){
-	gamedata = new Object();
-	gamedata.tiles = generate_tile_map_for_width_height(5,10);
 
 	return gamedata;
 }
@@ -34,12 +36,15 @@ var tileVertOffset = (tileHeight - tileHeight/3);
 var tileHeightRepeat = (tileVertOffset*2);
 var tileWidth = 64;
 
-function mouse_coords(e,canvas){
+function handle_mouse_click(e,canvas){
 	
     function x() { return e.pageX-canvas.offset().left; };
     function y() { return e.pageY-canvas.offset().top; };
- 
-	tile_at_coords(x(),y());
+
+	var point = tile_at_coords(x(),y());
+	gamedata.tiles[point[0]][point[1]]._tileType = 'indigo.png';
+	//console.log(gamedata.tiles[point[0]][point[1]]);
+	display_game(get_data());
 
 	//console.log("x = " + x());
 	//console.log("y = " + y());
@@ -47,20 +52,16 @@ function mouse_coords(e,canvas){
 
 function tile_at_coords(x, y){
 	//get_data().tiles[0].length);
-	var rowLength = 5;
+	//var rowLength = 5;
 	
-	console.log("row = " + row_given(x,y));
-	console.log("column = " + column_given_x_and_row(x,row_given(x,y)));
-	function rowX() { return Math.floor(x/tileWidth); };
+	//console.log("row = " + row_given(x,y));
+	//console.log("column = " + column_given_x_and_row(x,row_given(x,y)));
+	//function rowX() { return Math.floor(x/tileWidth); };
 	
-	function isOnOddRow() { 
-		//a little tricky here; basically we have 3 states which we cycle through over y - assuming a tile height of 48, we're variously 1] definitely on an even row for the first 16 pixels, 2] maybe on either for the next 16, and 3] definitely on an odd row for the next 16, 4] 2 again, but maybe with the rules flipped
-		// 2 and 4 can be seen as a function of y and x
-		
-	};
-	
-	//console.log(isOnOddRow());
-	isOnOddRow();
+	var point = [];
+	point.push(row_given(x,y));
+	point.push(column_given_x_and_row(x,row_given(x,y)));
+	return point;
 }
 
 function flipped(y){ return y % tileHeightRepeat >= tileVertOffset };
@@ -95,12 +96,12 @@ function row_given(x,y){
 function column_given_x_and_row(x,row){
 	function alt_x(){ return row%2 == 1 ? x - (tileWidth/2) : x; }; 
 	return misc.truncate( alt_x() / tileWidth);
-	//return alt_x();
 }
+
 
 function display_game(data){
 	ctx = $('#main_canvas')[0].getContext("2d");
-	$('#main_canvas').click( function(e){ mouse_coords(e,$('#main_canvas'))});
+	$('#main_canvas').click( function(e){ handle_mouse_click(e,$('#main_canvas'))});
 
 	display_tiles(data);
 
@@ -108,7 +109,7 @@ function display_game(data){
 		$.each(data.tiles, function(outerindex,outervalue) {
 		
 		
-			$.each(outervalue, function(index,value) { ctx.drawImage(util.images_cache[('images/' + value)],index*tileWidth +(tileWidth/2)*((outerindex)%2) ,outerindex* tileVertOffset); /*console.log(index);*/  });
+			$.each(outervalue, function(index,value) { ctx.drawImage(util.images_cache[( value.imageName() )],index*tileWidth +(tileWidth/2)*((outerindex)%2) ,outerindex* tileVertOffset); /*console.log(index);*/  });
 			
 		 });
 	}
