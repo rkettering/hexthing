@@ -1,5 +1,6 @@
 var ImageURL = './';
 var gamedata = null;
+var ctx = null;
 
 function init_game(){
 	util.init();
@@ -7,6 +8,9 @@ function init_game(){
 
 	gamedata = new Object();
 	gamedata.tiles = generate_tile_map_for_width_height(5,10);
+
+	ctx = $('#main_canvas')[0].getContext("2d");
+	$('#main_canvas').click( function(e){ handle_mouse_click(e,$('#main_canvas'))});
 	
 	if(util.ready_to_draw()){
 		display_game(get_data());
@@ -100,8 +104,6 @@ function column_given_x_and_row(x,row){
 
 
 function display_game(data){
-	ctx = $('#main_canvas')[0].getContext("2d");
-	$('#main_canvas').click( function(e){ handle_mouse_click(e,$('#main_canvas'))});
 
 	display_tiles(data);
 
