@@ -11,6 +11,15 @@ function init_game(){
 
 	ctx = $('#main_canvas')[0].getContext("2d");
 	$('#main_canvas').click( function(e){ handle_mouse_click(e,$('#main_canvas'))});
+
+	var sidebar = Object();
+	sidebar.canvas = $('<canvas class="sidebar_canvas" width="' + 250 + '" height="' + 350 + '"></canvas>');
+	$('body').append(sidebar.canvas);
+		sidebar.canvas.css({
+			'position': 'absolute',
+			'left': '500px',
+			'background-color':'#b0c4de'
+		});
 	
 	if(util.ready_to_draw()){
 		display_game(get_data());
