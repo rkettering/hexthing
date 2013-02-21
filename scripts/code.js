@@ -1,12 +1,14 @@
 var ImageURL = './';
 var gamedata = null;
 var ctx = null;
+var side_ctx = null;
 
 function init_game(){
 	util.init();
 	init_display();
 
 	gamedata = new Object();
+	gamedata.moves = 1;
 	gamedata.tiles = generate_tile_map_for_width_height(5,10);
 
 	ctx = $('#main_canvas')[0].getContext("2d");
@@ -14,12 +16,16 @@ function init_game(){
 
 	var sidebar = Object();
 	sidebar.canvas = $('<canvas class="sidebar_canvas" width="' + 250 + '" height="' + 350 + '"></canvas>');
+
 	$('body').append(sidebar.canvas);
 		sidebar.canvas.css({
 			'position': 'absolute',
 			'left': '500px',
 			'background-color':'#b0c4de'
 		});
+	side_ctx = $('.sidebar_canvas')[0].getContext('2d');
+	$('.sidebar_canvas').click( function(e){ handle_sidebar_mouse_click(e,$('.sidebar_canvas'))});
+	
 	
 	if(util.ready_to_draw()){
 		display_game(get_data());
@@ -55,12 +61,28 @@ function handle_mouse_click(e,canvas){
     function y() { return e.pageY-canvas.offset().top; };
 
 	var point = tile_at_coords(x(),y());
+
+	if(gamedata.moves > 0){
 	gamedata.tiles[point[0]][point[1]]._tileType = 'indigo.png';
-	//console.log(gamedata.tiles[point[0]][point[1]]);
+	gamedata.moves -= 1;
+	}
+
 	display_game(get_data());
+	
 
 	//console.log("x = " + x());
 	//console.log("y = " + y());
+}
+
+function handle_sidebar_mouse_click(e,canvas){
+
+    function x() { return e.pageX-canvas.offset().left; };
+    function y() { return e.pageY-canvas.offset().top; };
+
+	if( x() > 25 && x() < 125 && y() > 25 && y() < 50){
+		gamedata.moves = 2;
+		display_game(get_data());
+	}
 }
 
 function tile_at_coords(x, y){
@@ -115,6 +137,7 @@ function column_given_x_and_row(x,row){
 function display_game(data){
 
 	display_tiles(data);
+	display_sidebar(data);
 
 	function display_tiles(data){
 		$.each(data.tiles, function(outerindex,outervalue) {
@@ -125,4 +148,23 @@ function display_game(data){
 		 });
 	}
 
+	function display_sidebar(data){
+		clear_canvas(side_ctx);
+		side_ctx.fillRect(25,25,100,25);
+		side_ctx.font = "bold 12px sans-serif";
+		side_ctx.fillText("M: " + gamedata.moves, 25, 70);
+	}
+
+}
+
+function clear_canvas(_ctx) {
+	// Store the current transformation matrix
+	_ctx.save();
+
+	// Use the identity matrix while clearing the canvas
+	_ctx.setTransform(1, 0, 0, 1, 0, 0);
+	_ctx.clearRect(0, 0, _ctx.canvas.width, _ctx.canvas.height);
+
+	// Restore the transform
+	_ctx.restore();
 }
