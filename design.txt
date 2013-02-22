@@ -1,0 +1,98 @@
+Design:
+- goal is to have the most prestige at the end of N seasons
+goal may be changed by certain in-game actions.
+
+- resources brainstorm:
+fish
+meat
+grain
+wood
+stone
+coal
+gold
+prestige
+export
+spice
+housing
+quartering (troop)
+
+-resources finalized:
+food - necessary for many things, especially soldiers but decrements by 1 per turn (or maybe only lasts N turns?)
+wood - basic building resource
+stone - etc
+gold - etc
+prestige * the big resource used to win the game
+mandate - a special resource signifying the political clout of nobles; allows one to cut through red tape by invoking authority.  Essentially this is how many favors you're owed.
+soldiers - soldiers in your army, used to defend against and/or defeat enemies
+
+
+- on start of turn
+-- each player is dealt a random tarot-themed card which gives them a random payout of resources
+-- possibly have a feature where they get to pick between one or two or more
+-- possibly have the cards deal unique things given unique buildings (e.g. bishop + basilica)
+-- possibly have enemies show up; enemies may tend more towards winter
+--- enemies will have a persistent, latent effect every turn they exist on the map, besides just blocking production. This can be neutralized with a small number of soldiers or specific buildings.  Enemies can be fully removed by some steeper cost, which may involve not merely the purchase of soldiers, but possibly also the loss of them.
+
+
+buying soldiers requires food, and soldiers either require quartering every turn, or food every turn.
+
+-- card examples:
+- emperor: +2 soldiers. +2 prestige, +3 mandate
+- fool: +1 prestige, -1 resource (or null)
+- empress: +4 prestige
+- devil: +3 mandate, +3 gold, -5 prestige
+- tower: +2 stone, +2 wood, -3 prestige
+- chariot: +2 soldiers
+- lovers: +2 wood, +1 food
+
+
+
+
+- buildings:
+0* hovel | provides one quartering
+1* inn +1 card option at start
+1* farm +1 food/turn for each 2 surrounding plains tiles
+2* market | can trade 1 resource per turn for one gold
+pub | can trade 1 mandate for one prestige
+orchard +1 food/turn for each 2 surrounding forest tiles
+
+-- housing
+shack +pop?
+homestead
+manor
+compound
+chateau
+
+
+--religion
+shrine
+temple
+ziggurat
+monastery
+church
+chapel
+cathedral
+basilica
+
+--state
+square
+statue
+palace
+court
+
+
+--military
+stable
+blacksmith
+barracks
+keep
+castle
+tower
+barricade
+wall
+outpost
+
+
+--trade
+embassy
+

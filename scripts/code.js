@@ -1,5 +1,5 @@
 var ImageURL = './';
-var gamedata = null;
+
 var ctx = null;
 var side_ctx = null;
 
@@ -7,7 +7,7 @@ function init_game(){
 	util.init();
 	init_display();
 
-	gamedata = new Object();
+
 	gamedata.moves = 1;
 	gamedata.tiles = generate_tile_map_for_width_height(5,10);
 
@@ -44,9 +44,7 @@ function on_ready_to_draw()
 }
 
 function init_display(){
-	util.require_image_before_next_draw('images/green.png');
-	util.require_image_before_next_draw('images/teal.png');
-	util.require_image_before_next_draw('images/indigo.png');
+	gamedata.load_graphics();
 }
 
 
@@ -62,16 +60,11 @@ function handle_mouse_click(e,canvas){
 
 	var point = tile_at_coords(x(),y());
 
-	if(gamedata.moves > 0){
-	gamedata.tiles[point[0]][point[1]]._tileType = 'indigo.png';
-	gamedata.moves -= 1;
+	if(gamedata.can_move()){
+		gamedata.act_on_tile(point[0], point[1]);
 	}
 
 	display_game(get_data());
-	
-
-	//console.log("x = " + x());
-	//console.log("y = " + y());
 }
 
 function handle_sidebar_mouse_click(e,canvas){
@@ -80,18 +73,14 @@ function handle_sidebar_mouse_click(e,canvas){
     function y() { return e.pageY-canvas.offset().top; };
 
 	if( x() > 25 && x() < 125 && y() > 25 && y() < 50){
-		gamedata.moves = 2;
+		gamedata.end_turn();
 		display_game(get_data());
 	}
 }
 
 function tile_at_coords(x, y){
-	//get_data().tiles[0].length);
-	//var rowLength = 5;
-	
 	//console.log("row = " + row_given(x,y));
 	//console.log("column = " + column_given_x_and_row(x,row_given(x,y)));
-	//function rowX() { return Math.floor(x/tileWidth); };
 	
 	var point = [];
 	point.push(row_given(x,y));
@@ -99,17 +88,18 @@ function tile_at_coords(x, y){
 	return point;
 }
 
-function flipped(y){ return y % tileHeightRepeat >= tileVertOffset };
+
 
 function row_given(x,y){
 	//boost the row by one if we're on a peak jutting up from the row below
 	var rise = tileHeight/3;
 	var run = tileWidth/2;
 	function slope(){ return rise/run};
+	function flipped(y){ return y % tileHeightRepeat >= tileVertOffset };
 	function is_slope_rising(x){  if(flipped(y))	return (x % tileWidth) <= tileWidth/2;
 									else			return (x % tileWidth) > tileWidth/2;  };
 	
-	function slope_sign(x){  return misc.sign((x % tileWidth) - tileWidth/2)  };
+
 
 	function y_offset(x){ 
 		if( is_slope_rising(x) ){
