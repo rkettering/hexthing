@@ -1,4 +1,4 @@
-function generate_tile_map_for_width_height( width, height) {
+function generate_tile_map_for_width_height( width, height, is_empty) {
 	var theArray = [];
 	
 	for(var i = 0; i != height; i++){
@@ -6,7 +6,11 @@ function generate_tile_map_for_width_height( width, height) {
 		
 		for(var j = 0; j != width; j++){
 			var newTile = Object.create(tile);
-			newTile.tileType();
+			if(is_empty === 'empty'){
+				//do nothing
+			} else {
+				newTile.set_tileType();
+			}
 			array_row.push(newTile);
 		}
 		theArray.push(array_row);
@@ -22,12 +26,26 @@ var tile = {
 	get_rand_tile: function() { return tile.tile_types_possible[ misc.dice(tile.tile_types_possible.length) -1] },
 	
 	_tileType: null,
+	set_tileType: function() {
+		this._tileType = tile.get_rand_tile();
+	},
 	tileType: function() { 
-			if(this._tileType === null) {this._tileType = tile.get_rand_tile();}
-			 return this._tileType;
+		return this._tileType;
 	},
 	
 	
-	imageName: function() { return 'images/' + this.tileType(); },
+	imageName: function() { 
+		if(this.tileType() != null){
+			return 'images/' + this.tileType();
+		} else {	
+	 		return null; 
+		}
 	
+	},
+	
+	draw_tile: function(ctxt,x,y) {
+		if(this.imageName() != null) {
+			ctxt.drawImage(util.images_cache[(this.imageName())],x,y);
+		}
+	},	
 };

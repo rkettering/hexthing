@@ -7,9 +7,7 @@ function init_game(){
 	util.init();
 	init_display();
 
-
-	gamedata.moves = 1;
-	gamedata.tiles = generate_tile_map_for_width_height(5,10);
+	init_gamedata();
 
 	ctx = $('#main_canvas')[0].getContext("2d");
 	$('#main_canvas').click( function(e){ handle_mouse_click(e,$('#main_canvas'))});
@@ -122,7 +120,8 @@ function column_given_x_and_row(x,row){
 
 function display_game(data){
 
-	gamedata.display_tiles(data);
+	gamedata.display_tiles(data.tiles_terrain);
+	gamedata.display_tiles(data.tiles_buildings);
 	display_sidebar(data);
 
 
@@ -131,7 +130,9 @@ function display_game(data){
 		clear_canvas(side_ctx);
 		side_ctx.fillRect(25,25,100,25);
 		side_ctx.font = "bold 12px sans-serif";
-		side_ctx.fillText("M: " + gamedata.moves, 25, 70);
+		side_ctx.fillText("Moves: " + gamedata.moves, 25, 70);
+		
+		side_ctx.fillText("Player: " + (gamedata.current_player+1), 25, 90);
 	}
 
 }
