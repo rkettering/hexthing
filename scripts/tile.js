@@ -21,7 +21,7 @@ function generate_tile_map_for_width_height( width, height, is_empty) {
 
 
 var tile = {
-	tile_types_possible:  ['teal.png','green.png'],
+	tile_types_possible:  ['teal','green'],
 	
 	get_rand_tile: function() { return tile.tile_types_possible[ misc.dice(tile.tile_types_possible.length) -1] },
 	
@@ -36,7 +36,7 @@ var tile = {
 	
 	imageName: function() { 
 		if(this.tileType() != null){
-			return 'images/' + this.tileType();
+			return 'images/' + this.tileType() + '.png';
 		} else {	
 	 		return null; 
 		}
@@ -47,5 +47,14 @@ var tile = {
 		if(this.imageName() != null) {
 			ctxt.drawImage(util.images_cache[(this.imageName())],x,y);
 		}
-	},	
+	},
+	
+	building_types: {
+				house1: {
+					points: 1,
+				},
+				house2: {
+					points: 2,
+				},
+	},
 };

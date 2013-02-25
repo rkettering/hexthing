@@ -12,8 +12,11 @@ function init_gamedata() {
 
 	gamedata.moves = 2;
 	gamedata.tiles_terrain = generate_tile_map_for_width_height(5,10,null);
+	gamedata.tiles_buildings = [];
 	
-	gamedata.tiles_buildings = generate_tile_map_for_width_height(5,10,'empty');
+	for(i = 0; i < gamedata.num_players; i++){
+		gamedata.tiles_buildings[i] = generate_tile_map_for_width_height(5,10,'empty');
+	}
 }
 
 gamedata.load_graphics = function () {
@@ -32,12 +35,27 @@ gamedata.can_move = function () {
 	return gamedata.moves > 0;
 }
 
+gamedata.calculate_points = function () {
+	function calculate_building_points(player_num) {
+		var points = 0;
+		for(var y = 0; y < gamedata.tiles_buildings[player_num].length; y++){
+			for(var x = 0; x < gamedata.tiles_buildings[player_num][y].length; x++){
+				if( gamedata.tiles_buildings[player_num][y][x].tileType() != null){
+					points += tile.building_types[gamedata.tiles_buildings[player_num][y][x].tileType()].points;
+				}
+			}
+		}
+		return points;
+	}
+
+	return calculate_building_points(gamedata.current_player);
+}
 
 gamedata.act_on_tile = function(x, y) {
 	if(gamedata.current_player === 1){
-		gamedata.tiles_buildings[x][y]._tileType = 'house1.png';
+		gamedata.tiles_buildings[gamedata.current_player][x][y]._tileType = 'house1';
 	}else{
-		gamedata.tiles_buildings[x][y]._tileType = 'house2.png';
+		gamedata.tiles_buildings[gamedata.current_player][x][y]._tileType = 'house2';
 	}
 	gamedata.add_moves( -1 );
 }

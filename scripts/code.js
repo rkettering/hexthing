@@ -121,7 +121,7 @@ function column_given_x_and_row(x,row){
 function display_game(data){
 
 	gamedata.display_tiles(data.tiles_terrain);
-	gamedata.display_tiles(data.tiles_buildings);
+	gamedata.display_tiles(data.tiles_buildings[gamedata.current_player]);
 	display_sidebar(data);
 
 
@@ -133,6 +133,7 @@ function display_game(data){
 		side_ctx.fillText("Moves: " + gamedata.moves, 25, 70);
 		
 		side_ctx.fillText("Player: " + (gamedata.current_player+1), 25, 90);
+		side_ctx.fillText("Points: " + (gamedata.calculate_points()), 25, 110);
 	}
 
 }
