@@ -55,6 +55,7 @@ function handle_mouse_click(e,canvas){
 	var point = tile_at_coords(x(),y());
 
 	if(gamedata.can_move()){
+		console.log('clicking on tile');
 		gamedata.act_on_tile(point[0], point[1]);
 	}
 
@@ -119,7 +120,6 @@ function column_given_x_and_row(x,row){
 
 
 function display_game(data){
-
 	gamedata.display_tiles(data.tiles_terrain);
 	gamedata.display_tiles(data.tiles_buildings[gamedata.current_player]);
 	display_sidebar(data);
@@ -135,7 +135,6 @@ function display_game(data){
 		side_ctx.fillText("Player: " + (gamedata.current_player+1), 25, 90);
 		side_ctx.fillText("Points: " + (gamedata.calculate_points()), 25, 110);
 	}
-
 }
 
 function clear_canvas(_ctx) {
@@ -148,4 +147,33 @@ function clear_canvas(_ctx) {
 
 	// Restore the transform
 	_ctx.restore();
+}
+
+function show_build_options_dialog_for_tile(x,y) {
+		var dialog = $('<div id="choices_dialog"></div>');
+		$('body').append(dialog);
+			
+		dialog.css({
+			'top': 100 + 'px',
+			'left': 100 + 'px',
+			'width': 200 + 'px',
+			'height': 200 + 'px',
+			'position': 'absolute',
+			'background-color':'#b0c4ff'
+		});
+
+			dialog.click(function() {
+				console.log('dialog_clicked');
+				gamedata.build_on_tile(x,y);
+			});
+
+		var build_options = {
+			0: 'house1',
+			1: 'house2',
+		};
+		
+		$.each(build_options, function (index,value) {
+			console.log(value);
+		});
+		
 }

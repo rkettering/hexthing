@@ -53,12 +53,25 @@ gamedata.calculate_points = function () {
 
 gamedata.act_on_tile = function(x, y) {
 	if(gamedata.current_player === 1){
+		show_build_options_dialog_for_tile(x,y);
+	}else{
+		show_build_options_dialog_for_tile(x,y);
+	}
+}
+
+gamedata.build_on_tile = function(x, y) {
+	if(gamedata.current_player === 1){
 		gamedata.tiles_buildings[gamedata.current_player][x][y]._tileType = 'house1';
 	}else{
 		gamedata.tiles_buildings[gamedata.current_player][x][y]._tileType = 'house2';
 	}
 	gamedata.add_moves( -1 );
+	console.log('dialogue_removed');
+	$('#choices_dialog').remove();
+	display_game(get_data());
 }
+
+
 
 gamedata.display_tiles = function (tileMatrix){
 		function x_draw_location( xindex, yindex){
