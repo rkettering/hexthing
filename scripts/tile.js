@@ -36,17 +36,22 @@ var tile = {
 	
 	imageName: function() { 
 		if(this.tileType() != null){
-			return 'images/' + this.tileType() + '.png';
+			return this.imageNameForType(this.tileType());
 		} else {	
 	 		return null; 
 		}
-	
+	},
+	imageNameForType: function( type ){
+			return 'images/' + type + '.png';		
 	},
 	
 	draw_tile: function(ctxt,x,y) {
 		if(this.imageName() != null) {
 			ctxt.drawImage(util.images_cache[(this.imageName())],x,y);
 		}
+	},
+	draw_tile_type: function(ctxt,x,y,type) {
+			ctxt.drawImage(util.images_cache[( this.imageNameForType(type) )],x,y);
 	},
 		
 	building_types: {
@@ -55,6 +60,9 @@ var tile = {
 				},
 				house2: {
 					points: 2,
+				},
+				indigo: {
+					points: 0,
 				},
 	},
 };

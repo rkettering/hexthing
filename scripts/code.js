@@ -153,11 +153,18 @@ function show_build_options_dialog_for_tile(x,y) {
 		var dialog = $('<div id="choices_dialog"></div>');
 		$('body').append(dialog);
 			
+		var build_options = {
+			2: 'house1',
+			1: 'house2',
+			0: 'indigo',
+		};
+		
+		var option_height = 64;
 		dialog.css({
 			'top': 100 + 'px',
 			'left': 100 + 'px',
 			'width': 300 + 'px',
-			'height': 300 + 'px',
+			'height': (option_height * build_options.length) + 'px',
 			'position': 'absolute',
 			'background-color':'#b0c4ff'
 		});
@@ -167,26 +174,22 @@ function show_build_options_dialog_for_tile(x,y) {
 				gamedata.build_on_tile(x,y);
 			});*/
 
-		var build_options = {
-			0: 'house1',
-			1: 'house2',
-		};
 		
 		function draw_individual_building_option(ctx, y, building) {
-			ctx.fillText("Building: " + building, 25, y);
+			ctx.fillText("Building: " + building, (64+12), y+32);
+			tile.draw_tile_type(ctx, 8, y + 8, building);
 		}
 		
 		var canvas = null;
 		$.each(build_options, function (index,value) {
-				canvas = $('<canvas class="building_choice dialog_option" width="' + 300 + '" height="' + 60 + '"></canvas>');
-					draw_individual_building_option(canvas.get(0).getContext('2d'), 20, value);
+				canvas = $('<canvas class="building_choice dialog_option" width="' + 300 + '" height="' + option_height + '"></canvas>');
+					draw_individual_building_option(canvas.get(0).getContext('2d'), 0, value);
 
 			canvas.click(function() {
 				gamedata.build_on_tile(x,y, this);
 			}.bind(value));
 			
 			$('#choices_dialog').append(canvas);
-			console.log(value);
 		});
 		
 }
