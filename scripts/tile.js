@@ -48,7 +48,7 @@ var tile = {
 			ctxt.drawImage(util.images_cache[(this.imageName())],x,y);
 		}
 	},
-	
+		
 	building_types: {
 				house1: {
 					points: 1,
