@@ -162,10 +162,10 @@ function show_build_options_dialog_for_tile(x,y) {
 			'background-color':'#b0c4ff'
 		});
 
-			dialog.click(function() {
+		/*	dialog.click(function() {
 				console.log('dialog_clicked');
 				gamedata.build_on_tile(x,y);
-			});
+			});*/
 
 		var build_options = {
 			0: 'house1',
@@ -181,10 +181,11 @@ function show_build_options_dialog_for_tile(x,y) {
 				canvas = $('<canvas class="building_choice dialog_option" width="' + 300 + '" height="' + 60 + '"></canvas>');
 					draw_individual_building_option(canvas.get(0).getContext('2d'), 20, value);
 
-			//canvas.click(function() {
-			//	null
-			//};
-				$('#choices_dialog').append(canvas);
+			canvas.click(function() {
+				gamedata.build_on_tile(x,y, this);
+			}.bind(value));
+			
+			$('#choices_dialog').append(canvas);
 			console.log(value);
 		});
 		

@@ -59,12 +59,8 @@ gamedata.act_on_tile = function(x, y) {
 	}
 }
 
-gamedata.build_on_tile = function(x, y) {
-	if(gamedata.current_player === 1){
-		gamedata.tiles_buildings[gamedata.current_player][x][y]._tileType = 'house1';
-	}else{
-		gamedata.tiles_buildings[gamedata.current_player][x][y]._tileType = 'house2';
-	}
+gamedata.build_on_tile = function(x, y, building_type) {
+	gamedata.tiles_buildings[gamedata.current_player][x][y]._tileType = building_type;
 	gamedata.add_moves( -1 );
 	console.log('dialogue_removed');
 	$('#choices_dialog').remove();
