@@ -147,7 +147,7 @@ load_cached_image: function(key) {
 
 
 		var current_time = new Date();
-		console.log('loaded ' + img.key + ' in ' + (current_time.getTime() - img.started_loading) + 'ms');
+		//console.log('loaded ' + img.key + ' in ' + (current_time.getTime() - img.started_loading) + 'ms');
 	}.bind(img);
 
 	img.onerror = function() {

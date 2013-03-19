@@ -11,7 +11,23 @@ definitions: {
 		bottom: {x: 32, y: 96, w: 64, h: 32, imageName: 'images/border.png'},
 		right: {x: 96, y: 32, w: 32, h: 64, imageName: 'images/border.png'},
 		left: {x: 0, y: 32, w: 32, h: 64, imageName: 'images/border.png'},
+		
+		background_pattern: {w: 64, h: 64, imageName: 'images/border_fill.png', _store: null},
+		
 	},
+},
+
+register_images: function() {
+	var imageList = [];
+	$.each(this.definitions, function(index, value) {
+		$.each(value, function(index, value) {
+			if( $.inArray(value.imageName, imageList) === -1) { imageList.push( value.imageName ); };
+		});
+	});
+	//console.dir(imageList);
+	$.each(imageList, function(index, value) {
+		util.require_image_before_next_draw(value);
+	});
 },
 
 
@@ -36,10 +52,18 @@ draw_sides: function(ctx, wd, x,y,w,h){
 	this.draw_at(ctx, wd.left, x, y + wd.upper_left.h, wd.left.w, h - wd.upper_left.h - wd.lower_left.h);
 },
 
-draw_background: {
+draw_background: function(ctx, wd, x,y,w,h){
+	if(wd.background_pattern._store == undefined){
+		wd.background_pattern._store = ctx.createPattern(util.images_cache[wd.background_pattern.imageName],'repeat');
+	};
+	var	old_fillStyle = ctx.fillStyle;
+	ctx.fillStyle = wd.background_pattern._store;
+	ctx.fillRect(x,y,w,h);
+	ctx.fillStyle = old_fillStyle;
 },
 
 draw: function(ctx, widget_type, x, y, w, h) {
+	this.draw_background(ctx, widget_type, x, y, w, h);
 	this.draw_corners(ctx, widget_type, x, y, w, h);
 	this.draw_sides(ctx, widget_type, x, y, w, h);
 },
