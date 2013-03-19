@@ -128,7 +128,9 @@ function display_game(data){
 
 	function display_sidebar(data){
 		clear_canvas(side_ctx);
+		widget_bordered.draw(side_ctx, widget_bordered.definitions.window, 0, 0, side_ctx.canvas.width, side_ctx.canvas.height);
 		side_ctx.fillRect(25,25,100,25);
+		
 		side_ctx.font = "bold 12px sans-serif";
 		side_ctx.fillText("Moves: " + gamedata.moves, 25, 70);
 		

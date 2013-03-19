@@ -25,6 +25,8 @@ gamedata.load_graphics = function () {
 	util.require_image_before_next_draw('images/indigo.png');
 	util.require_image_before_next_draw('images/house1.png');
 	util.require_image_before_next_draw('images/house2.png');
+	
+	util.require_image_before_next_draw('images/border.png');
 }
 
 gamedata.add_moves = function (count) {
