@@ -15,6 +15,20 @@ definitions: {
 		background_pattern: {w: 64, h: 64, imageName: 'images/border_fill.png', _store: null, offset: 8},
 		
 	},
+	button: {
+		upper_right: {x: 0, y: 0, w: 8, h: 8, imageName: 'images/button.png'},
+		upper_left: {x: 24, y: 0, w: 8, h: 8, imageName: 'images/button.png'},
+		lower_left: {x: 24, y: 24, w: 8, h: 8, imageName: 'images/button.png'},
+		lower_right: {x: 0, y: 24, w: 8, h: 8, imageName: 'images/button.png'},
+	
+		top: {x: 8, y: 0, w: 16, h: 8, imageName: 'images/button.png'},
+		bottom: {x: 8, y: 24, w: 16, h: 8, imageName: 'images/button.png'},
+		right: {x: 24, y: 8, w: 8, h: 16, imageName: 'images/button.png'},
+		left: {x: 0, y: 8, w: 8, h: 16, imageName: 'images/button.png'},
+		
+		background_pattern: {w: 32, h: 32, imageName: 'images/button_fill.png', _store: null, offset: 8},
+		
+	},
 },
 
 register_images: function() {

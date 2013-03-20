@@ -130,9 +130,11 @@ function display_game(data){
 		clear_canvas(side_ctx);
 		widget_bordered.draw(side_ctx, widget_bordered.definitions.window, 0, 0, side_ctx.canvas.width, side_ctx.canvas.height);
 		
+		widget_bordered.draw(side_ctx, widget_bordered.definitions.button, 25, 25, 100, 25);
 		side_ctx.fillStyle = "#ffffff";
-		side_ctx.fillRect(25,25,100,25);
+		//side_ctx.fillRect(25,25,100,25);
 		side_ctx.font = "bold 12px sans-serif";
+		side_ctx.fillText("End Turn", 49, 42);
 		side_ctx.fillText("Moves: " + gamedata.moves, 25, 70);
 		
 		side_ctx.fillText("Player: " + (gamedata.current_player+1), 25, 90);
