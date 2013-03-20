@@ -12,7 +12,7 @@ definitions: {
 		right: {x: 96, y: 32, w: 32, h: 64, imageName: 'images/border.png'},
 		left: {x: 0, y: 32, w: 32, h: 64, imageName: 'images/border.png'},
 		
-		background_pattern: {w: 64, h: 64, imageName: 'images/border_fill.png', _store: null},
+		background_pattern: {w: 64, h: 64, imageName: 'images/border_fill.png', _store: null, offset: 8},
 		
 	},
 },
@@ -58,7 +58,7 @@ draw_background: function(ctx, wd, x,y,w,h){
 	};
 	var	old_fillStyle = ctx.fillStyle;
 	ctx.fillStyle = wd.background_pattern._store;
-	ctx.fillRect(x,y,w,h);
+	ctx.fillRect(x+wd.background_pattern.offset,y+wd.background_pattern.offset,w-2*wd.background_pattern.offset,h-2*wd.background_pattern.offset);
 	ctx.fillStyle = old_fillStyle;
 },
 

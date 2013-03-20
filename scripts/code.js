@@ -19,7 +19,7 @@ function init_game(){
 		sidebar.canvas.css({
 			'position': 'absolute',
 			'left': '500px',
-			'background-color':'#b0c4de'
+			/*'background-color':'#b0c4de'*/
 		});
 	side_ctx = $('.sidebar_canvas')[0].getContext('2d');
 	$('.sidebar_canvas').click( function(e){ handle_sidebar_mouse_click(e,$('.sidebar_canvas'))});
@@ -129,8 +129,9 @@ function display_game(data){
 	function display_sidebar(data){
 		clear_canvas(side_ctx);
 		widget_bordered.draw(side_ctx, widget_bordered.definitions.window, 0, 0, side_ctx.canvas.width, side_ctx.canvas.height);
-		side_ctx.fillRect(25,25,100,25);
 		
+		side_ctx.fillStyle = "#ffffff";
+		side_ctx.fillRect(25,25,100,25);
 		side_ctx.font = "bold 12px sans-serif";
 		side_ctx.fillText("Moves: " + gamedata.moves, 25, 70);
 		
