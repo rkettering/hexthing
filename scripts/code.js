@@ -154,6 +154,7 @@ function clear_canvas(_ctx) {
 	_ctx.restore();
 }
 
+
 function show_build_options_dialog_for_tile(x,y) {
 		var dialog = $('<div id="choices_dialog"></div>');
 		$('body').append(dialog);
@@ -174,19 +175,16 @@ function show_build_options_dialog_for_tile(x,y) {
 			'background-color':'#b0c4ff'
 		});
 
-		/*	dialog.click(function() {
-				console.log('dialog_clicked');
-				gamedata.build_on_tile(x,y);
-			});*/
-
 		
 		function draw_individual_building_option(ctx, y, building) {
+				widget_bordered.draw(ctx, widget_bordered.definitions.button, 0, 0, ctx.canvas.width, ctx.canvas.height);
 			ctx.fillText("Building: " + building, (64+12), y+32);
 			tile.draw_tile_type(ctx, 8, y + 8, building);
 		}
 		
 		var canvas = null;
 		$.each(build_options, function (index,value) {
+
 				canvas = $('<canvas class="building_choice dialog_option" width="' + 300 + '" height="' + option_height + '"></canvas>');
 					draw_individual_building_option(canvas.get(0).getContext('2d'), 0, value);
 

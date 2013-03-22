@@ -54,10 +54,14 @@ gamedata.calculate_points = function () {
 }
 
 gamedata.act_on_tile = function(x, y) {
-	if(gamedata.current_player === 1){
-		show_build_options_dialog_for_tile(x,y);
-	}else{
-		show_build_options_dialog_for_tile(x,y);
+	function build_options_dialog_open() { return ( $('#choices_dialog').length > 0 );}
+	
+	if( !build_options_dialog_open() ) {
+		if(gamedata.current_player === 1){
+			show_build_options_dialog_for_tile(x,y);
+		}else{
+			show_build_options_dialog_for_tile(x,y);
+		}
 	}
 }
 
