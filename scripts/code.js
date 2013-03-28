@@ -2,6 +2,8 @@ var ImageURL = './';
 
 var ctx = null;
 var side_ctx = null;
+var side_stage = null;
+
 
 function init_game(){
 	util.init();
@@ -24,7 +26,8 @@ function init_game(){
 	side_ctx = $('.sidebar_canvas')[0].getContext('2d');
 	$('.sidebar_canvas').click( function(e){ handle_sidebar_mouse_click(e,$('.sidebar_canvas'))});
 	
-	
+	side_stage = new createjs.Stage( $('.sidebar_canvas')[0] );
+
 	if(util.ready_to_draw()){
 		display_game(get_data());
 	}
@@ -38,6 +41,8 @@ function get_data(){
 
 function on_ready_to_draw()
 {
+	widget_bordered.initialize_bitmaps();
+	
 	display_game(get_data());
 }
 
@@ -128,9 +133,9 @@ function display_game(data){
 
 	function display_sidebar(data){
 		clear_canvas(side_ctx);
-		widget_bordered.draw(side_ctx, widget_bordered.definitions.window, 0, 0, side_ctx.canvas.width, side_ctx.canvas.height);
+		widget_bordered.draw(side_stage, widget_bordered.definitions.window, 0, 0, side_ctx.canvas.width, side_ctx.canvas.height);
 		
-		widget_bordered.draw(side_ctx, widget_bordered.definitions.button, 25, 25, 100, 25);
+		//widget_bordered.draw(side_ctx, widget_bordered.definitions.button, 25, 25, 100, 25);
 		side_ctx.fillStyle = "#ffffff";
 		//side_ctx.fillRect(25,25,100,25);
 		side_ctx.font = "bold 12px sans-serif";
@@ -177,7 +182,7 @@ function show_build_options_dialog_for_tile(x,y) {
 
 		
 		function draw_individual_building_option(ctx, y, building) {
-				widget_bordered.draw(ctx, widget_bordered.definitions.button, 0, 0, ctx.canvas.width, ctx.canvas.height);
+			//widget_bordered.draw(ctx, widget_bordered.definitions.button, 0, 0, ctx.canvas.width, ctx.canvas.height);
 			ctx.fillText("Building: " + building, (64+12), y+32);
 			tile.draw_tile_type(ctx, 8, y + 8, building);
 		}

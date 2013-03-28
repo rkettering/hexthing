@@ -110,6 +110,7 @@ init: function() {
 },
 
 images_cache: {},
+bitmaps_cache: {},
 images_loading: {},
 image_loading_errors: {},
 
@@ -143,8 +144,10 @@ load_cached_image: function(key) {
 	img.started_loading = current_time.getTime();
 	img.onload = function() {
 		util.images_cache[this.key] = this;
+		//console.dir(new createjs.Bitmap(this));
+		var bitmap = new createjs.Bitmap(this);
+		util.bitmaps_cache[this.key] = bitmap;
 		util.on_file_completed_download(this.key);
-
 
 		var current_time = new Date();
 		//console.log('loaded ' + img.key + ' in ' + (current_time.getTime() - img.started_loading) + 'ms');
