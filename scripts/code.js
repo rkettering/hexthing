@@ -19,9 +19,10 @@ function init_game(){
 		value.canvas = $('<canvas class="main_canvas_' + index + '" width="' + 500 + '" height="' + 400 + '"></canvas>');
 		$('body').append(value.canvas);
 		value.canvas.css({ 'position': 'absolute'});
-		if(index > 0){ value.canvas.css({ 'opacity': 0 }); }
+		//if(index > 0){ value.canvas.css({ 'opacity': 0 }); }
 		contexts.push(value.canvas[0].getContext("2d"));
 		value.canvas.click( function(e){ handle_mouse_click(e,value.canvas)});
+		if(index > 0){ $(value.canvas).fadeOut(0); }
 
 	});
 
@@ -77,12 +78,9 @@ function handle_sidebar_mouse_click(e,canvas){
 			display_game(get_data());
 		}
 
+		$(contexts[misc.mod((gamedata.current_player+1),gamedata.num_players)].canvas).fadeIn(500);
+		$(contexts[gamedata.current_player].canvas).fadeOut(500);
 		switch_to_next_player();
-		/*$('.main_canvas_B').animate({top:'0px'},500);
-		$('.main_canvas_B').animate({opacity:'255'},500);
-		$('.main_canvas_A').animate({top:'182px'},500);
-		$('.main_canvas_A').animate({opacity:'0'},500);*/
-		
 	}
 }
 
@@ -134,8 +132,8 @@ function column_given_x_and_row(x,row){
 function display_game(data){
 	
 	$.each(contexts, function(index, value){
-		if(index != gamedata.current_player){ $(value.canvas).css({'opacity': 0}); }
-		if(index == gamedata.current_player){ $(value.canvas).css({'opacity': 255}); }
+//		if(index != gamedata.current_player){ $(value.canvas).css({'opacity': 0}); }
+//		if(index == gamedata.current_player){ $(value.canvas).css({'opacity': 255}); }
 		gamedata.display_tiles(value, data.tiles_terrain);
 		gamedata.display_tiles(value, data.tiles_buildings[index]);
 	});

@@ -14,4 +14,8 @@ dice: function(diceNum){
 	return misc.truncate(Math.random() * diceNum) + 1;
 },
 
+mod: function(left, right){
+	return (left%right + right)%right;
+},
+
 };

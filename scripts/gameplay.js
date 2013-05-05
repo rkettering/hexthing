@@ -10,7 +10,7 @@ function init_gamedata() {
 	gamedata.tileHeightRepeat = (gamedata.tileVertOffset*2);
 	gamedata.tileWidth = 64;
 
-	gamedata.num_players = 2;
+	gamedata.num_players = 3;
 	gamedata.current_player = 0;
 
 	gamedata.moves = 2;
