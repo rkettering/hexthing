@@ -1,7 +1,9 @@
 var ImageURL = './';
 
-var ctx = null;
 var side_ctx = null;
+var canvases = [];
+var contexts = [];
+
 
 function init_game(){
 	util.init();
@@ -9,35 +11,39 @@ function init_game(){
 
 	init_gamedata();
 
-	ctx = $('#main_canvas')[0].getContext("2d");
-	$('#main_canvas').click( function(e){ handle_mouse_click(e,$('#main_canvas'))});
+	for( var i = 0; i < gamedata.num_players; i++){
+		var newView = Object();
+		canvases.push(newView);
+	}
+	$.each(canvases, function(index,value){
+		value.canvas = $('<canvas class="main_canvas_' + index + '" width="' + 500 + '" height="' + 400 + '"></canvas>');
+		$('body').append(value.canvas);
+		value.canvas.css({ 'position': 'absolute'});
+		if(index > 0){ value.canvas.css({ 'opacity': 0 }); }
+		contexts.push(value.canvas[0].getContext("2d"));
+		value.canvas.click( function(e){ handle_mouse_click(e,value.canvas)});
+
+	});
+
 
 	var sidebar = Object();
 	sidebar.canvas = $('<canvas class="sidebar_canvas" width="' + 250 + '" height="' + 350 + '"></canvas>');
 
 	$('body').append(sidebar.canvas);
-		sidebar.canvas.css({
-			'position': 'absolute',
-			'left': '500px',
-			/*'background-color':'#b0c4de'*/
-		});
+	sidebar.canvas.css({ 'position': 'absolute', 'left': '500px', });
 	side_ctx = $('.sidebar_canvas')[0].getContext('2d');
 	$('.sidebar_canvas').click( function(e){ handle_sidebar_mouse_click(e,$('.sidebar_canvas'))});
-	
-	
+		
 	if(util.ready_to_draw()){
 		display_game(get_data());
 	}
 }
 	
 function get_data(){
-
 	return gamedata;
 }
 
-
-function on_ready_to_draw()
-{
+function on_ready_to_draw(){
 	display_game(get_data());
 }
 
@@ -48,14 +54,13 @@ function init_display(){
 
 
 function handle_mouse_click(e,canvas){
-	
     function x() { return e.pageX-canvas.offset().left; };
     function y() { return e.pageY-canvas.offset().top; };
 
 	var point = tile_at_coords(x(),y());
 
 	if(gamedata.can_move()){
-		console.log('clicking on tile');
+		//console.log('clicking on tile');
 		gamedata.act_on_tile(point[0], point[1]);
 	}
 
@@ -63,19 +68,26 @@ function handle_mouse_click(e,canvas){
 }
 
 function handle_sidebar_mouse_click(e,canvas){
-
     function x() { return e.pageX-canvas.offset().left; };
     function y() { return e.pageY-canvas.offset().top; };
 
 	if( x() > 25 && x() < 125 && y() > 25 && y() < 50){
-		gamedata.end_turn();
-		display_game(get_data());
+		function switch_to_next_player(){
+			gamedata.end_turn();
+			display_game(get_data());
+		}
+
+		switch_to_next_player();
+		/*$('.main_canvas_B').animate({top:'0px'},500);
+		$('.main_canvas_B').animate({opacity:'255'},500);
+		$('.main_canvas_A').animate({top:'182px'},500);
+		$('.main_canvas_A').animate({opacity:'0'},500);*/
+		
 	}
 }
 
 function tile_at_coords(x, y){
-	//console.log("row = " + row_given(x,y));
-	//console.log("column = " + column_given_x_and_row(x,row_given(x,y)));
+	//console.log("row = " + row_given(x,y) + "  column = " + column_given_x_and_row(x,row_given(x,y)));
 	
 	var point = [];
 	point.push(row_given(x,y));
@@ -120,8 +132,15 @@ function column_given_x_and_row(x,row){
 
 
 function display_game(data){
-	gamedata.display_tiles(data.tiles_terrain);
-	gamedata.display_tiles(data.tiles_buildings[gamedata.current_player]);
+	
+	$.each(contexts, function(index, value){
+		if(index != gamedata.current_player){ $(value.canvas).css({'opacity': 0}); }
+		if(index == gamedata.current_player){ $(value.canvas).css({'opacity': 255}); }
+		gamedata.display_tiles(value, data.tiles_terrain);
+		gamedata.display_tiles(value, data.tiles_buildings[index]);
+	});
+
+
 	display_sidebar(data);
 
 

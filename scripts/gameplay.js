@@ -1,5 +1,8 @@
-var gamedata = null;
-gamedata = new Object();
+var gamedata = {
+	foobar: function() {return 24;},
+
+};
+//gamedata = new Object();
 
 function init_gamedata() {
 	gamedata.tileHeight = 48;
@@ -75,7 +78,7 @@ gamedata.build_on_tile = function(x, y, building_type) {
 
 
 
-gamedata.display_tiles = function (tileMatrix){
+gamedata.display_tiles = function (ctx, tileMatrix){
 		function x_draw_location( xindex, yindex){
 			return xindex*gamedata.tileWidth +(gamedata.tileWidth/2)*((yindex)%2);
 		};
